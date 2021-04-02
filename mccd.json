@@ -1,0 +1,198 @@
+"newtypeinfo": {
+	"_noisegen": {
+		"file": "worldgen/noise_settings"
+	},
+	"_biome": {
+		"file": "worldgen/biome"
+	},
+	"_carver": {
+		"file": "worldgen/configured_carver"
+	},
+	"_surface_builder": {
+		"file": "worldgen/configured_surface_builder"
+	},
+	"_feature": {
+		"file": "worldgen/configured_feature"
+	},
+	"_structure_feature": {
+		"file": "worldgen/configured_surface_builder"
+	},
+	"_jigsaw_pool": {},
+	"_processor_list": {},
+	"_predicate": {}
+},
+"block": {
+	"Name": "block",
+	"Properties": {
+		"key": "value"
+	}
+},
+"noisegen": {
+},
+"biome": {
+	"depth": "(float ? ?)",
+	"scale": "(float ? ?)",
+	"precipitation": "(enum none rain snow)",
+	"category": "(enum none taiga extreme_hills jungle mesa plains savanna icy the_end beach forest ocean desert river swamp mushroom nether)",
+	"temperature": "(float ? ?)",
+	"temperature_modifier": "(enum none frozen)",
+	"downfall": "(float ? ?)" Controls grass and foliage color, a value above 0.85 also makes fire burn out faster.,
+	"player_spawn_friendly": "(bool)",
+	"creature_spawn_probability": "(float 0 1)",
+	"effects": {
+		"fog_color": "(rgb)",
+		"foliage_color": "(optional rgb)",
+		"grass_color": "(optional rgb)",
+		"sky_color": "(rgb)",
+		"water_color": "(rgb)",
+		"water_fog_color": "(rgb)",
+		"grass_color_modifier": "(enum none dark_forest swamp)",
+		"particle (optional)": {
+			"probability": "(float ? ?)",
+			"options": {
+				"type": "(namespace particle)",
+				"(if type block falling_dust)": "(block)",
+				"(if type dust)": {
+					"r": "(float 0 1)",
+					"g": "(float 0 1)",
+					"b": "(float 0 1)",
+					"scale": "(float 0 4?)"
+				},
+				"(if type item)": {
+					"id": "(namespace item)",
+					"Count": "1",
+					"tag": "(nbt)"
+				}
+			}
+		},
+		"ambient_sound": "(optional namespace sound)",
+		"mood_sound (optional)": {
+			"sound": "(namespace sound)",
+			"tick_delay": "(int 1200 12000)",
+			"block_search_extent": "(int 0 16)",
+			"offset": "(double)"
+		},
+		"additions_sound (optional)": {
+			"sound": "(namespace sound)",
+			"tick_chance": "(double 0 1?)"
+		},
+		"music (optional)": {
+			"sound": "(namespace sound)",
+			"min_delay": "(int 1200 12000)",
+			"max_delay": "(int 12000 24000)",
+			"replace_current_music": "(bool)"
+		}
+	},
+	"surface_builder": "(surface_builder)",
+	"carvers": {
+		"air": [
+			"(list configured_carver air)"
+		],
+		"liquid": [
+			"(list configured_carver liquid)"
+		]
+	},
+	"features": [
+		["(list feature RAW_GENERATION)"],
+		["(list feature LAKES)"],
+		["(list feature LOCAL_MODIFICATIONS)"],
+		["(list feature UNDERGROUND_STRUCTURES)"],
+		["(list feature SURFACE_STRUCTURES)"],
+		["(list feature STRONGHOLDS)"],
+		["(list feature UNDERGROUND_ORES)"],
+		["(list feature UNDERGROUND_DECORATION)"],
+		["(list feature VEGETAL_DECORATION)"],
+		["(list feature TOP_LAYER_MODIFICATION)"]
+	],
+	"starts": [
+		"(structure_feature)"
+	],
+	"spawners": {
+		"(enum monster creature ambient water_creature water_ambient misc)": [
+			{
+				"type": "(namespace mob)",
+				"weight": "(int 1 10?)",
+				"minCount": "(int 2 4)",
+				"maxCount": "(int 6 10)"
+			}
+		]
+	},
+	"spawn_costs": {
+		"entity id": {
+			"energy_budget": "(double 0 1)",
+			"charge": "(double 0 1)"
+		}
+	}
+},
+"carver": {
+	"type": "(enum cave nether_cave canyon underwater_canyon underwater_cave)",
+	"config": {
+		"probability": "(float 0 1)"
+	}
+},
+"surface_builder": {
+	"type": "(enum default mountain shattered_savanna gravelly_mountain giant_tree_taiga swamp badlands wooded_badlands eroded_badlands frozen_ocean nether nether_forest soul_sand_valley basalt_deltas nope)",
+	"config": {
+		"top_material": "(block)",
+		"under_material": "(block)",
+		"underwater_material": "(block)"
+	}
+},
+"feature": {
+},
+"structure_feature": {
+},
+"jigsaw_pool": {
+},
+"processor_list": {
+},
+"predicate": {
+}
+
+{
+	"type": "minecraft:decorated",
+	"config": {
+		"decorator": {
+			"type": "minecraft:decorated",
+			"config": {
+				"outer": "minecraft:heightmap_spread_double",
+				"inner": "minecraft:spread_32_above",
+			}
+		},
+		"feature": {
+			"type": "minecraft:disk",
+			"config": {
+				"state": {
+					"type": "weighted_state_provider",
+					"entries": [
+						{
+							"data": {
+								"Name": "minecraft:snow",
+								"Properties": {}
+							},
+							"weight": 2
+						},
+						{
+							"data": {
+								"Name": "minecraft:packed_ice",
+								"Properties": {}
+							},
+							"weight": 1
+						}
+					]
+				}
+				"radius": {
+					"base": 4,
+					"spread": 2
+				}
+				"half_height": 3
+				"targets": [
+					{
+						"Name": "minecraft:air",
+						"Properties": {}
+					}
+				]
+			}
+		}
+	}
+}
