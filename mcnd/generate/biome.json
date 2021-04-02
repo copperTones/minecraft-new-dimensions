@@ -1,0 +1,141 @@
+{
+	"depth": {"type": "float ? ?"},
+	"scale": {"type": "float ? ?"},
+	"precipitation": {"type": "enum none rain snow"},
+	"category": {"type": "enum none taiga extreme_hills jungle mesa plains savanna icy the_end beach forest ocean desert river swamp mushroom nether"},
+	"temperature": {"type": "float ? ?"},
+	"temperature_modifier": {"type": "enum none frozen"},
+	"downfall": {"type": "float ? ?"},
+	"player_spawn_friendly": {"type": "bool"},
+	"creature_spawn_probability": {"type": "float 0 1"},
+	"effects": {
+		"fog_color": {"type": "rgb"},
+		"foliage_color": {"type": "optional rgb"},
+		"grass_color": {"type": "optional rgb"},
+		"sky_color": {"type": "rgb"},
+		"water_color": {"type": "rgb"},
+		"water_fog_color": {"type": "rgb"},
+		"grass_color_modifier": {"type": "enum none dark_forest swamp"},
+		"particle (optional"}: {
+			"probability": {"type": "float ? ?"},
+			"options": {
+				"type": {"type": "namespace particle"},
+				{"type": "if type block falling_dust"}: "(block)",
+				{"type": "if type dust"}: {
+					"r": {"type": "float 0 1"},
+					"g": {"type": "float 0 1"},
+					"b": {"type": "float 0 1"},
+					"scale": {"type": "float 0 4?"}
+				},
+				{"type": "if type item"}: {
+					"id": {"type": "namespace item"},
+					"Count": "1",
+					"tag": {"type": "nbt"}
+				}
+			}
+		},
+		"ambient_sound": {"type": "optional namespace sound"},
+		"mood_sound (optional"}: {
+			"sound": {"type": "namespace sound"},
+			"tick_delay": {"type": "int 1200 12000"},
+			"block_search_extent": {"type": "int 0 16"},
+			"offset": {"type": "double"}
+		},
+		"additions_sound (optional"}: {
+			"sound": {"type": "namespace sound"},
+			"tick_chance": {"type": "double 0 1?"}
+		},
+		"music (optional"}: {
+			"sound": {"type": "namespace sound"},
+			"min_delay": {"type": "int 1200 12000"},
+			"max_delay": {"type": "int 12000 24000"},
+			"replace_current_music": {"type": "bool"}
+		}
+	},
+	"surface_builder": {"type": "surface_builder"},
+	"carvers": {
+		"air": {
+			"type": "list",
+			"of": {
+				"type": "namespaced",
+				"value": "configured_carver_air"
+			}
+		},
+		"liquid": {
+			"type": "list",
+			"of": {
+				"type": "namespaced",
+				"value": "configured_carver_water"
+			}
+		}
+	},
+	"features": [
+		{"type": "list feature raw_generation"},
+		{"type": "list feature lakes"},
+		{"type": "list feature local_modifications"},
+		{"type": "list feature underground_structures"},
+		{"type": "list feature surface_structures"},
+		{"type": "list feature strongholds"},
+		{"type": "list feature underground_ores"},
+		{"type": "list feature underground_decoration"},
+		{"type": "list feature vegetal_decoration"},
+		{"type": "list feature top_layer_modification"}
+	],
+	"starts": {
+		"type": "list",
+		"length": 0,
+		"of": {
+			"type": "namespaced",
+			"value": "structure_feature"
+		}
+	},
+	"spawners": {
+		"type": "named_list",
+		"name": {
+			"type": "enum",
+			"values": [
+				"monster",
+				"creature",
+				"ambient",
+				"water_creature",
+				"water_ambient",
+				"misc"
+			]
+		},
+		"value": {
+			"type": {
+				"type": "namespace",
+				"value": "mob"
+			},
+			"weight": {
+				"type": "int_binomial",
+				"min": 1,
+				"max": 10
+			},
+			"minCount": {
+				"type": "int_binomial",
+				"min": 2,
+				"max": 4
+			},
+			"maxCount": {
+				"type": "int_binomial",
+				"min": 6,
+				"max": 10
+			}
+		}
+	},
+	"spawn_costs": {
+		"entity id": {
+			"energy_budget": {
+				"type": "double_binomial",
+				"min": 0,
+				"max": 1
+			},
+			"charge": {
+				"type": "double_binomial",
+				"min": 0,
+				"max": 1
+			}
+		}
+	}
+}
