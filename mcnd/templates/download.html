@@ -3,5 +3,8 @@
 	<title>Download</title>
 </head>
 <body>
-	<a href={{ url_for('download') }}>Download</a>
+	<form method="post">
+		<textarea name="description"></textarea>
+		<input type="submit" value="Download">
+	</form>
 </body>
