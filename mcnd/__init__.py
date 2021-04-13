@@ -10,9 +10,10 @@ def create_app(test_config=None):
 
     @app.route('/test', methods=('GET', 'POST'))
     def test():
-        if request.method == 'GET':
+        if request.method == 'GET': # default behavior
             return render_template('download.html')
 
+        # after hitting btn, page is redirected to self - with POST
         mem_io = BytesIO()
         with ZipFile(mem_io, 'w') as zf:
             zf.writestr(os.path.join('New Dimensions', 'pack.mcmeta'),

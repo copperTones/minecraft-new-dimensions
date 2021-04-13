@@ -1,4 +1,5 @@
 **/__pycache__/
+helpers/tmp/
 
 # because i'm using vim
 **.sw?

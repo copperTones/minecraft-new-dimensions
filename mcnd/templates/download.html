@@ -4,7 +4,12 @@
 </head>
 <body>
 	<form method="post">
-		<textarea name="description"></textarea>
+		<input type="hidden" id="game-version" name="game-version" value="1.16"></input>
+		<input type="hidden" id="generator-version" name="generator-version" value="1"></input>
+		<label for="dimension-seed"></label><br>
+		<input type="text" id="dimension-seed" name="dimension-seed"></input><br>
+		<label for="world-seed"></label><br>
+		<input type="number" id="world-seed" name="world-seed"></input><br>
 		<input type="submit" value="Download">
 	</form>
 </body>
