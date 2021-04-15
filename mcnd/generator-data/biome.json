@@ -300,7 +300,7 @@
 	},
 	"spawners": {
 		"gen": "code",
-		"code": "print(value) #{k: r_generate(value['json']) for k in value['list']}",
+		"code": "{k: value['json'] for k in value['list']}",
 		"value": {
 			"list": [
 				"monster",
