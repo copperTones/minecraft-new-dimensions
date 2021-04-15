@@ -1,138 +1,347 @@
 {
-	"depth": {"type": "float ? ?"},
-	"scale": {"type": "float ? ?"},
-	"precipitation": {"type": "enum none rain snow"},
-	"category": {"type": "enum none taiga extreme_hills jungle mesa plains savanna icy the_end beach forest ocean desert river swamp mushroom nether"},
-	"temperature": {"type": "float ? ?"},
-	"temperature_modifier": {"type": "enum none frozen"},
-	"downfall": {"type": "float ? ?"},
-	"player_spawn_friendly": {"type": "bool"},
-	"creature_spawn_probability": {"type": "float 0 1"},
+	"depth": {
+		"gen": "float_uniform",
+		"min": 0,
+		"max": 1
+	},
+	"scale": {
+		"gen": "float_uniform",
+		"min": 0,
+		"max": 1
+	},
+	"precipitation": {
+		"gen": "enum",
+		"value": [
+			"none",
+			"rain",
+			"snow"
+		]
+	},
+	"category": {
+		"gen": "enum",
+		"value": [
+			"none",
+			"taiga",
+			"extreme_hills",
+			"jungle",
+			"mesa",
+			"plains",
+			"savanna",
+			"icy",
+			"the_end",
+			"beach",
+			"forest",
+			"ocean",
+			"desert",
+			"river",
+			"swamp",
+			"mushroom",
+			"nether"
+		]
+	},
+	"temperature": {
+		"gen": "float_uniform",
+		"max": 1,
+		"min": 0
+	},
+	"temperature_modifier": {
+		"gen": "enum",
+		"value": [
+			"none",
+			"frozen"
+		]
+	},
+	"downfall": {
+		"gen": "float_uniform",
+		"max": 1,
+		"min": 0
+	},
+	"player_spawn_friendly": false,
+	"creature_spawn_probability": {
+		"gen": "float_uniform",
+		"max": 1,
+		"min": 0
+	},
 	"effects": {
-		"fog_color": {"type": "rgb"},
-		"foliage_color": {"type": "optional rgb"},
-		"grass_color": {"type": "optional rgb"},
-		"sky_color": {"type": "rgb"},
-		"water_color": {"type": "rgb"},
-		"water_fog_color": {"type": "rgb"},
-		"grass_color_modifier": {"type": "enum none dark_forest swamp"},
-		"particle (optional"}: {
-			"probability": {"type": "float ? ?"},
-			"options": {
-				"type": {"type": "namespace particle"},
-				{"type": "if type block falling_dust"}: "(block)",
-				{"type": "if type dust"}: {
-					"r": {"type": "float 0 1"},
-					"g": {"type": "float 0 1"},
-					"b": {"type": "float 0 1"},
-					"scale": {"type": "float 0 4?"}
+		"fog_color": {
+			"gen": "rgb"
+		},
+		"foliage_color": {
+			"gen": "optional",
+			"probability": 0.1,
+			"value": {
+				"gen": "rgb"
+			}
+		},
+		"grass_color": {
+			"gen": "optional",
+			"probability": 0.1,
+			"value": {
+				"gen": "rgb"
+			}
+		},
+		"sky_color": {
+			"gen": "rgb"
+		},
+		"water_color": {
+			"gen": "rgb"
+		},
+		"water_fog_color": {
+			"gen": "rgb"
+		},
+		"grass_color_modifier": {
+			"gen": "enum",
+			"value": [
+				"none",
+				"dark_forest",
+				"swamp"
+			]
+		},
+		"particle": {
+			"gen": "optional",
+			"probability": 0.1,
+			"value": {
+				"probability": {
+					"gen": "float_uniform",
+					"max": 1,
+					"min": 0
 				},
-				{"type": "if type item"}: {
-					"id": {"type": "namespace item"},
-					"Count": "1",
-					"tag": {"type": "nbt"}
+				"options": {
+					"type": {
+						"gen": "namespace particle"
+					},
+					"{'gen': 'if type block falling_dust'}": "(block)",
+					"{'gen': 'if type dust'}": {
+						"r": {
+							"gen": "float_uniform",
+							"max": 1,
+							"min": 0
+						},
+						"g": {
+							"gen": "float_uniform",
+							"max": 1,
+							"min": 0
+						},
+						"b": {
+							"gen": "float_uniform",
+							"max": 1,
+							"min": 0
+						},
+						"scale": {
+							"gen": "float_uniform",
+							"max": 4,
+							"min": 0
+						}
+					},
+					"{'gen': 'if type item'}": {
+						"id": {
+							"gen": "namespace item"
+						},
+						"Count": "1",
+						"tag": {
+							"gen": "nbt"
+						}
+					}
 				}
 			}
 		},
-		"ambient_sound": {"type": "optional namespace sound"},
-		"mood_sound (optional"}: {
-			"sound": {"type": "namespace sound"},
-			"tick_delay": {"type": "int 1200 12000"},
-			"block_search_extent": {"type": "int 0 16"},
-			"offset": {"type": "double"}
+		"ambient_sound": {
+			"gen": "optional",
+			"probability": 0.1,
+			"value": {
+				"gen": "namespace",
+				"type": "sound"
+			}
 		},
-		"additions_sound (optional"}: {
-			"sound": {"type": "namespace sound"},
-			"tick_chance": {"type": "double 0 1?"}
+		"mood_sound": {
+			"gen": "optional",
+			"value": {
+				"sound": {
+					"gen": "namespace sound"
+				},
+				"tick_delay": {
+					"gen": "int 1200 12000"
+				},
+				"block_search_extent": {
+					"gen": "int 0 16"
+				},
+				"offset": {
+					"gen": "double"
+				}
+			}
 		},
-		"music (optional"}: {
-			"sound": {"type": "namespace sound"},
-			"min_delay": {"type": "int 1200 12000"},
-			"max_delay": {"type": "int 12000 24000"},
-			"replace_current_music": {"type": "bool"}
+		"additions_sound": {
+			"gen": "optional",
+			"value": {
+				"sound": {
+					"gen": "namespace sound"
+				},
+				"tick_chance": {
+					"gen": "double 0 1?"
+				}
+			}
+		},
+		"music": {
+			"gen": "optional",
+			"value": {
+				"sound": {
+					"gen": "namespace sound"
+				},
+				"min_delay": {
+					"gen": "int 1200 12000"
+				},
+				"max_delay": {
+					"gen": "int 12000 24000"
+				},
+				"replace_current_music": {
+					"gen": "bool"
+				}
+			}
 		}
 	},
-	"surface_builder": {"type": "surface_builder"},
+	"surface_builder": {
+		"gen": "dynamic_namespace",
+		"value": "surface_builder"
+	},
 	"carvers": {
 		"air": {
-			"type": "list",
-			"of": {
-				"type": "namespaced",
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
 				"value": "configured_carver_air"
 			}
 		},
 		"liquid": {
-			"type": "list",
-			"of": {
-				"type": "namespaced",
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
 				"value": "configured_carver_water"
 			}
 		}
 	},
 	"features": [
-		{"type": "list feature raw_generation"},
-		{"type": "list feature lakes"},
-		{"type": "list feature local_modifications"},
-		{"type": "list feature underground_structures"},
-		{"type": "list feature surface_structures"},
-		{"type": "list feature strongholds"},
-		{"type": "list feature underground_ores"},
-		{"type": "list feature underground_decoration"},
-		{"type": "list feature vegetal_decoration"},
-		{"type": "list feature top_layer_modification"}
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "raw_generation"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "lakes"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "local_modifications"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "underground_structures"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "surface_structures"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "strongholds"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "underground_ores"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "underground_decoration"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "vegetal_decoration"
+			}
+		},
+		{
+			"gen": "array",
+			"value": {
+				"gen": "dynamic_namespace",
+				"value": "top_layer_modification"
+			}
+		}
 	],
 	"starts": {
-		"type": "list",
-		"length": 0,
-		"of": {
-			"type": "namespaced",
+		"gen": "array",
+		"value": {
+			"gen": "dynamic_namespace",
 			"value": "structure_feature"
 		}
 	},
 	"spawners": {
-		"type": "named_list",
-		"name": {
-			"type": "enum",
-			"values": [
+		"gen": "code",
+		"code": "print(value) #{k: r_generate(value['json']) for k in value['list']}",
+		"value": {
+			"list": [
 				"monster",
 				"creature",
 				"ambient",
 				"water_creature",
 				"water_ambient",
 				"misc"
-			]
-		},
-		"value": {
-			"type": {
-				"type": "namespace",
-				"value": "mob"
-			},
-			"weight": {
-				"type": "int_binomial",
-				"min": 1,
-				"max": 10
-			},
-			"minCount": {
-				"type": "int_binomial",
-				"min": 2,
-				"max": 4
-			},
-			"maxCount": {
-				"type": "int_binomial",
-				"min": 6,
-				"max": 10
+			],
+			"json": {
+				"type": {
+					"gen": "namespace",
+					"value": "mob"
+				},
+				"weight": {
+					"gen": "int_binomial",
+					"min": 1,
+					"max": 10
+				},
+				"minCount": {
+					"gen": "int_binomial",
+					"min": 2,
+					"max": 4
+				},
+				"maxCount": {
+					"gen": "int_binomial",
+					"min": 6,
+					"max": 10
+				}
 			}
 		}
 	},
 	"spawn_costs": {
 		"entity id": {
 			"energy_budget": {
-				"type": "double_binomial",
+				"gen": "float_uniform",
 				"min": 0,
 				"max": 1
 			},
 			"charge": {
-				"type": "double_binomial",
+				"gen": "float_uniform",
 				"min": 0,
 				"max": 1
 			}
