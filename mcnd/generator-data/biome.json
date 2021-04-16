@@ -68,14 +68,14 @@
 		},
 		"foliage_color": {
 			"gen": "optional",
-			"probability": 0.1,
+			"probability": 0.2,
 			"value": {
 				"gen": "rgb"
 			}
 		},
 		"grass_color": {
 			"gen": "optional",
-			"probability": 0.1,
+			"probability": 0.2,
 			"value": {
 				"gen": "rgb"
 			}
@@ -99,7 +99,6 @@
 		},
 		"particle": {
 			"gen": "optional",
-			"probability": 0.1,
 			"value": {
 				"probability": {
 					"gen": "float_uniform",
@@ -147,7 +146,6 @@
 		},
 		"ambient_sound": {
 			"gen": "optional",
-			"probability": 0.1,
 			"value": {
 				"gen": "namespace",
 				"type": "sound"
@@ -300,7 +298,7 @@
 	},
 	"spawners": {
 		"gen": "code",
-		"code": "{k: value['json'] for k in value['list']}",
+		"code": "{k: r_generate(value['json']) for k in value['list']}",
 		"value": {
 			"list": [
 				"monster",
@@ -311,39 +309,50 @@
 				"misc"
 			],
 			"json": {
-				"type": {
-					"gen": "namespace",
-					"value": "mob"
-				},
-				"weight": {
-					"gen": "int_binomial",
-					"min": 1,
-					"max": 10
-				},
-				"minCount": {
-					"gen": "int_binomial",
-					"min": 2,
-					"max": 4
-				},
-				"maxCount": {
-					"gen": "int_binomial",
-					"min": 6,
-					"max": 10
+				"gen": "array",
+				"value": {
+					"type": {
+						"gen": "namespace",
+						"value": "mob"
+					},
+					"weight": {
+						"gen": "int_binomial",
+						"min": 1,
+						"max": 10
+					},
+					"minCount": {
+						"gen": "int_binomial",
+						"min": 2,
+						"max": 4
+					},
+					"maxCount": {
+						"gen": "int_binomial",
+						"min": 6,
+						"max": 10
+					}
 				}
 			}
 		}
 	},
 	"spawn_costs": {
-		"entity id": {
-			"energy_budget": {
-				"gen": "float_uniform",
-				"min": 0,
-				"max": 1
+		"gen": "code",
+		"code": "{}",
+		"value": {
+			"name": {
+				"gen": "namespace",
+				"value": "mob"
 			},
-			"charge": {
-				"gen": "float_uniform",
-				"min": 0,
-				"max": 1
+			"json": {
+				"energy_budget": {
+					"gen": "float_uniform",
+					"min": 0,
+					"max": 1
+				},
+				"charge": {
+					"gen": "float_uniform",
+					"min": 0,
+					"max": 1
+				}
 			}
 		}
 	}

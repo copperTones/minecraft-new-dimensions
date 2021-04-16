@@ -15,7 +15,8 @@ def r_generate(obj):
     if type(obj) is dict:
         if 'gen' in obj:
             return generate(**obj)
-        return {k: r_generate(v) for k, v in obj.items()}
+        obj = {k: r_generate(v) for k, v in obj.items()}
+        return {k: v for k, v in obj.items() if v != None}
     elif type(obj) is list:
         return [r_generate(x) for x in obj]
     else:
@@ -40,7 +41,7 @@ def array(value, length=0):
         length = generate(length)
     return [r_generate(value) for i in range(length)]
 
-def optional(value, probability=.1):
+def optional(value, probability=0):
     if random.random() < probability:
         return value
 
@@ -53,6 +54,8 @@ def code(code, value):
     return eval(code, var)
 
 def namespace(value):
+    if value == 'surface_builder':
+        return 'minecraft:grass'
     return 'random '+value
 
 def dynamic_namespace(value):
